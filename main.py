@@ -203,18 +203,18 @@ while iniciarTrivia:
             numRandom = random.randint(20, 400)
             print(i, ")", numRandom)
             opcionesNum.append(numRandom)
-        indiceNum = int(input("Elija una opcion: "))
+        indiceNum=validarNum("Elija una opcion: ")
         indiceNum -= 1
         while (indiceNum >= len(opcionesNum)):
             print("No puede elegir una opcion fuera de rango [1-5]")
-            indiceNum = int(input("Elija una opcion: "))
+            indiceNum=validarNum("Elija una opcion: ")
             indiceNum -= 1
         numRandom = opcionesNum[indiceNum]
         time.sleep(2)
         print(B_GREEN + "**** Podrias sumar", numRandom,"puntos o podrias restarle", numRandom,"a tu puntaje ****" + RESET)
         print("Dejemos que la suerte decida tu destino!")
         #Si el numero que elige el usuario es el mismo al del random se suma
-        numeroEleccionUsuario = int(input("Elige [1 o 2]: "))
+        numeroEleccionUsuario=validarNum("Elige [1 o 2]: ")
         resultado = random.randint(1, 3)
         ####FOR -LOOP DEL DESAFIO DE CICLOS.
         print("Resultado en: ")

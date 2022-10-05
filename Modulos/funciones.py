@@ -45,5 +45,14 @@ def printOpciones(listaOpciones):
     for alt, opcion in zip(alternativas, listaOpciones):
         print("\t" + alt + ") " + opcion)
 
-
+#PARA VALIDAR QUE INGRESE UN NÚMERO
+def validarNum(mensaje):
+    try:
+        numero=int(input(mensaje))
+        print(type(numero))
+        return numero
+    except:
+        print("No se ha ingresado un número")
+        numero=validarNum(mensaje)
+        return numero
 #####FIN DE FUNCIONES#################
