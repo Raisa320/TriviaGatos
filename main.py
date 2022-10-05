@@ -1,30 +1,11 @@
 import time
 import random  #Libreria random
 import os #Libreria para limpiar pantalla 
-###CONSTANTES DE COLORES
-RED = '\033[31m'
-GREEN = '\033[32m'
-PURPLE = '\033[0;95m'
-RESET = '\033[0m'
-#COLORES CON NEGRITA
-B_RED = "\033[1;31m"  # Red
-B_GREEN = "\033[1;32m"  # Green
-B_YELLOW = "\033[1;33m"  # Yellow
-B_BLUE = "\033[1;34m"  # Blue
-B_PURPLE = "\033[1;35m"  # Purple
-B_CYAN = "\033[1;36m"  # Cyan
-#COLORES CON SUBRAYADO
-URED = "\033[4;31m"  # Red
-UGREEN = "\033[4;32m"  # Green
-UYELLOW = "\033[4;33m"  # Yellow
-UBLUE = "\033[4;34m"  # Blue
-#COLORES CON BACKGROUND
-BG_CYAN = "\033[0;106m"  # Cyan
-####FIN DE CONSTANTES#####
+from Modulos.funciones import *
+from Modulos.colores import *
 
 ###VARIABLES
-puntaje = 0  #Putntaje inicial
-isFoundSecret = False  #Por si descubre la palabra secreta (solo se descubre una vez)
+
 iniciarTrivia = True  #Repetir trivia
 intentos = 1  #Nro de intentos de trivia
 listaPuntajeIntentos=[] #Guarda el puntaje que se realiza en cada intento
@@ -36,51 +17,6 @@ elif os.name == "ce" or os.name == "nt" or os.name == "dos":
 
 ####FIN DE VARIABLES#####
 
-
-####FUNCIONES ############
-#PARA VALIDACION DE LA PREGUNTA SI ESTA EN EL RANGO O SE DESCUBRE LA PALABRA SECRETA
-def validacionRpta(nroPregunta=0):
-    # Almacenamos la respuesta del usuario en la variable "respuesta"
-    respuesta = input(UBLUE + B_BLUE + "\nTu respuesta:" + RESET + RESET + " ")
-    while respuesta.lower() not in ("a", "b", "c", "d", "prrr", "miau"):
-        respuesta = input("*** Debes responder a, b, c o d.*** \n Ingresa nuevamente tu respuesta: ")
-    #Esta es la palabra secreta, solo se descubre 1 vez
-    if (respuesta == "miau"):
-        global isFoundSecret #para usar variable global
-        if (isFoundSecret):
-            print("Ya no puedes decirme eso. Ya me lo has dicho! Mejor responde la pregunta")
-        else:
-            print(B_GREEN+"Vaya, nunca me habian dicho algo tan lindo! Has descubierto la palabra secreta en la trivia. Genial, Obtienes 100 puntos"+RESET)
-            global puntaje
-            puntaje += 100 #suma 100 puntos si se descubre palabra
-            print(B_RED+"\n******Ey! Aún tienes que responder la pregunta.******"+RESET)
-            isFoundSecret = True
-        respuesta = validacionRpta(nroPregunta)
-    #Esta es una palabra que se menciona si responde "no" en la pregunta random es una ayuda para el jugador, (solo funciona en la pregunta 2)
-    if respuesta == "prrr" and nroPregunta == 2:
-        print("****-> Todo sea por ese ronroneo, Tip: La respuesta esta en tu"+B_RED+ " NARIZ"+RESET +".Creo que la respuesta es obvia!")
-        respuesta = validacionRpta()
-    elif respuesta == "prrr":
-        print("****-> Ey! aunque ronronees, pero esta no es la pregunta con ayuda. Vamos sé que tú puedes!.")
-        respuesta = validacionRpta()
-    return respuesta.lower()#devuelve en minuscula
-
-#PARA MOSTRAR EL MENSAJE ACTUAL
-def mostrarPuntajeActual(user, puntaje):
-    print(B_YELLOW +
-          "\n=========================================================")
-    print("||", user, "tu puntaje actual es de:", puntaje, "puntos ||")
-    print("=========================================================" + RESET)
-
-
-#PARA IMPRIMIR LAS OPCIONES DE RESPUESTA
-def printOpciones(listaOpciones):
-    alternativas = ["a", "b", "c", "d"]
-    for alt, opcion in zip(alternativas, listaOpciones):
-        print("\t" + alt + ") " + opcion)
-
-
-#####FIN DE FUNCIONES#################
 
 #######COMIENZO DEL PROGRAMA EN CONSOLA
 # Lo primero es mostrar en pantalla el texto de bienvenida para quien juegue tu trivia
@@ -289,7 +225,7 @@ while iniciarTrivia:
             print(B_BLUE + "Genial! Tienes mucha suerte se te sumaran", numRandom, "puntos" + RESET)
             puntaje += numRandom
         else:
-            print(B_RED + "Vaya suerte la tuya. Por desgracia se estaran", numRandom, "puntos" + RESET)
+            print(B_RED + "Vaya suerte la tuya. Por desgracia se restaran", numRandom, "puntos" + RESET)
             puntaje -= numRandom
     elif (azar.lower() == "no"):
         print(UYELLOW + "Oh! Es una pena podrias haber sumado más puntos." + RESET)
